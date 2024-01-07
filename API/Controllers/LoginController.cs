@@ -12,12 +12,15 @@ namespace MotoTuneAPI.Controllers
             _logger = logger;
         }
 
-        [HttpPut]
+        [HttpGet]
         [Route("[action]")]
         [ProducesDefaultResponseType]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult AddUser ( [FromQuery] string login,string password)
+        public string AddUser ( [FromQuery] string login,string password)
         {
+            if (context.Users.Any(x => x.UsrLogin.Equals(login))) 
+                return "Exist";
+
             context.Users.Add(new User
             {
                 UsrLogin = login,
@@ -27,7 +30,7 @@ namespace MotoTuneAPI.Controllers
 
             context.SaveChanges();
 
-            return Ok() ;
+            return "";
         }
 
         [HttpGet]
