@@ -16,21 +16,30 @@ namespace MotoTuneAPI.Controllers
         [Route("[action]")]
         [ProducesDefaultResponseType]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public string AddUser ( [FromQuery] string login,string password)
+        public string AddUser ( [FromQuery] string login, string password )
         {
-            if (context.Users.Any(x => x.UsrLogin.Equals(login))) 
-                return "Exist";
-
-            context.Users.Add(new User
+            string result = "";
+            
+            try
             {
-                UsrLogin = login,
-                UsrPassword = password,
-                UsrDate = DateTime.Now
-            });
+                if (context.Users.Any(x => x.UsrLogin.Equals(login)))
+                    return "Exist";
 
-            context.SaveChanges();
+                context.Users.Add(new User
+                {
+                    UsrLogin = login,
+                    UsrPassword = password,
+                    UsrDate = DateTime.Now
+                });
 
-            return "";
+                context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+
+            return result;
         }
 
         [HttpGet]
@@ -39,7 +48,7 @@ namespace MotoTuneAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IEnumerable<User> GetUsers ( )
         {
-            return context.Users.ToList(); ;
+            return context.Users.ToList();
         }
     }
 }
