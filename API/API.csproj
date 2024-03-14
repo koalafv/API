@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\DataBase\Mappings\" />
     <Folder Include="Models\DataBase\Views\" />
   </ItemGroup>
 

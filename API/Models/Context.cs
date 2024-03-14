@@ -17,10 +17,12 @@ public partial class Context : DbContext
     }
 
     public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Messages> Messages { get; set; }
+    public virtual DbSet<ReadedMessages> ReadedMessages { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MotoTune;Trusted_Connection=True;");
+        => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=PKM;Trusted_Connection=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -28,20 +30,54 @@ public partial class Context : DbContext
         {
             entity.HasKey(e => e.UsrId);
 
-            entity.Property(e => e.UsrId).HasColumnName("usr_ID");
-            entity.Property(e => e.UsrDate)
-                .HasColumnType("datetime")
-                .HasColumnName("usr_date");
-            entity.Property(e => e.UsrLogin)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("usr_Login");
-            entity.Property(e => e.UsrPassword)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("usr_Password");
+            entity.Property(e => e.UsrId)
+                .HasColumnName("usr_id");
+
+            entity.Property(e => e.UsrWorkerNumber)
+                .HasMaxLength(16)
+                .HasColumnName("usr_workerNumber");
+
+            entity.Property(e => e.UsrWorkerPin)
+                .HasMaxLength(4)
+                .HasColumnName("usr_workerPin");
+
+            entity.Property(e => e.UserName)
+                .HasColumnName("usr_name");
+
+            entity.Property(e => e.UserPermisionId)
+                .HasColumnName("usr_usrp_id");
+        });
+        modelBuilder.Entity<ReadedMessages>(entity =>
+        {
+            entity.HasKey(e => e.RmessId);
+
+            entity.Property(e => e.RmessId)
+               .HasColumnName("rmess_id");
+
+            entity.Property(e => e.Rmess_messId)
+                .HasColumnName("rmess_messId");
+
+            entity.Property(e => e.Rmess_usrId)
+                .HasColumnName("rmess_usrId");
         });
 
+        modelBuilder.Entity<Messages>(entity =>
+        {
+            entity.HasKey(e => e.MessId);
+
+            entity.Property(e => e.MessId)
+                .HasColumnName("mess_id");
+
+            entity.Property(e => e.Text)
+                .HasColumnName("mess_text");
+
+            entity.Property(e => e.DateCreated)
+                .HasColumnType("datetime")
+                .HasColumnName("mess_date");
+
+            entity.Property(e => e.UserId)
+                .HasColumnName("mess_createby_usrId");
+        });
         OnModelCreatingPartial(modelBuilder);
     }
 

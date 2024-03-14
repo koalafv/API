@@ -7,9 +7,10 @@ public partial class User
 {
     public int UsrId { get; set; }
 
-    public string UsrLogin { get; set; } = null!;
+    public string UsrWorkerPin { get; set; } = null!;
 
-    public string UsrPassword { get; set; } = null!;
+    public string UsrWorkerNumber { get; set; } = null!;
 
-    public DateTime UsrDate { get; set; }
+    public int UserPermisionId { get; set; }
+    public string UserName { get; set; }
 }
