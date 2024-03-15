@@ -39,7 +39,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<Messages> GetMessage()
         {
-            return Ok(context.Messages.FirstOrDefault());
+            return Ok(context.Messages.OrderByDescending(o=>o.MessId).FirstOrDefault());
         }
 
         [HttpPut]
