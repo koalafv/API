@@ -24,6 +24,7 @@ public partial class Context : DbContext
     public virtual DbSet<Messages> Messages { get; set; }
     public virtual DbSet<ReadedMessages> ReadedMessages { get; set; }
     public virtual DbSet<MessageItems> MessageItems { get; set; }
+    public virtual DbSet<Instruction> Instruction { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -109,6 +110,25 @@ public partial class Context : DbContext
             entity.Property(e => e.UserPermission)
                 .HasColumnName("usrp_permission");
         });
+
+        modelBuilder.Entity<Instruction>(entity =>
+        {
+            entity.HasKey(e=>e.Id);
+
+            entity.Property(e => e.Id)
+            .HasColumnName("instr_id");
+
+            entity.Property(e => e.Date)
+            .HasColumnType("datetime")
+            .HasColumnName("instr_date");
+
+            entity.Property(e => e.Patronage)
+            .HasColumnName("instr_patronage");
+
+            entity.Property(e => e.Number)
+            .HasColumnName("instr_number");
+        });
+
         OnModelCreatingPartial(modelBuilder);
     }
 
