@@ -12,5 +12,6 @@ public partial class User
     public string UsrWorkerNumber { get; set; } = null!;
 
     public int UserPermisionId { get; set; }
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
+    public string? UserSurname { get; set; }
 }

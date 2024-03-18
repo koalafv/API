@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MotoTuneAPI.Controllers;
 using MotoTuneAPI;
 using System.Reflection.Metadata.Ecma335;
+using API.Models.DataBase.Views;
 
 namespace API.Controllers
 {
@@ -22,6 +23,9 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult PutMessage (string text, int usrId )
         {
+            if (text == null)
+                return BadRequest();
+
             context.Messages.Add(new Messages
             {
                 DateCreated = DateTime.Now,
@@ -66,6 +70,15 @@ namespace API.Controllers
             if(context.ReadedMessages.Any(x=>x.Rmess_messId == messageId && x.Rmess_usrId == userId))
                 return Ok(true);
             return Ok(false);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        [ProducesDefaultResponseType]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<List<MessageItems>> GetMessageItems ( string permission)
+        {
+            return Ok(context.MessageItems.Where(w=>w.UserPermission == permission).OrderByDescending(o => o.DateCreated).ToList());
         }
     }
 }

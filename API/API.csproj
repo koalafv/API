@@ -9,13 +9,9 @@
 
   <ItemGroup>
     <Compile Remove="Models\DataBase\Mappings\**" />
-    <Compile Remove="Models\DataBase\Views\**" />
     <Content Remove="Models\DataBase\Mappings\**" />
-    <Content Remove="Models\DataBase\Views\**" />
     <EmbeddedResource Remove="Models\DataBase\Mappings\**" />
-    <EmbeddedResource Remove="Models\DataBase\Views\**" />
     <None Remove="Models\DataBase\Mappings\**" />
-    <None Remove="Models\DataBase\Views\**" />
   </ItemGroup>
 
   <ItemGroup>
